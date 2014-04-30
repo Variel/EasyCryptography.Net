@@ -1,6 +1,7 @@
 #EasyCryptography.Net
 
 This library provides easy access to ```System.Security.Cryptography```
+
 It designed for easiness, not for diversity or powerful functions
 
 *.Net Framework 3.5 or above REQUIRED*
