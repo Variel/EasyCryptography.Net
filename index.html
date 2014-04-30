@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>EasyCryptography.Net by Variel</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>EasyCryptography.Net</h1>
+        <h2>This library provides easy access to System.Security.Cryptography</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/Variel/EasyCryptography.Net/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/Variel/EasyCryptography.Net/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/Variel/EasyCryptography.Net" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="easycryptographynet" class="anchor" href="#easycryptographynet"><span class="octicon octicon-link"></span></a>EasyCryptography.Net</h1>
+
+<p>This library provides easy access to <code>System.Security.Cryptography</code>
+It designed for <strong>EASINESS</strong>, not for diversity or powerful functions</p>
+
+<h2>
+<a name="how-to-use" class="anchor" href="#how-to-use"><span class="octicon octicon-link"></span></a>How to use</h2>
+
+<div class="highlight highlight-C#"><pre><span class="c1">//using statement</span>
+<span class="k">using</span> <span class="nn">Variel.Security</span><span class="p">;</span>
+
+<span class="c1">//How to hash data (SHA1/256/512, MD5 Supported)</span>
+<span class="kt">string</span> <span class="n">sha256Hash</span> <span class="p">=</span> <span class="n">Hash</span><span class="p">.</span><span class="n">SHA256Hash</span><span class="p">(</span><span class="s">"This string will be hashed"</span><span class="p">);</span>
+
+<span class="c1">//How to encrypt and decrypt data symmetrically (AES(Rijndael) Supported)</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">salt</span> <span class="p">=</span> <span class="n">Guid</span><span class="p">.</span><span class="n">NewGuid</span><span class="p">().</span><span class="n">ToByteArray</span><span class="p">();</span> <span class="c1">//Create a salt;</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">"This is Normal String"</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">encryptedData</span> <span class="p">=</span> <span class="n">Cryptography</span><span class="p">.</span><span class="n">EncryptAES</span><span class="p">(</span><span class="s">"This is the KEY"</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">data</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">decryptedData</span> <span class="p">=</span> <span class="n">Cryptography</span><span class="p">.</span><span class="n">DecryptAES</span><span class="p">(</span><span class="s">"This is the KEY"</span><span class="p">,</span> <span class="n">salt</span><span class="p">,</span> <span class="n">encryptedData</span><span class="p">);</span>
+
+<span class="c1">//How to encrypt and decrypt data asymmetrically (RSA Supported)</span>
+<span class="n">RSAParameters</span> <span class="n">key</span> <span class="p">=</span> <span class="n">Cryptography</span><span class="p">.</span><span class="n">CreateRSAParameter</span><span class="p">();</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">data</span> <span class="p">=</span> <span class="n">Encoding</span><span class="p">.</span><span class="n">UTF8</span><span class="p">.</span><span class="n">GetBytes</span><span class="p">(</span><span class="s">"This is Normal String"</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">encryptedData</span> <span class="p">=</span> <span class="n">Cryptography</span><span class="p">.</span><span class="n">EncryptRSA</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+<span class="kt">byte</span><span class="p">[]</span> <span class="n">decryptedData</span> <span class="p">=</span> <span class="n">Cryptography</span><span class="p">.</span><span class="n">DecryptRSA</span><span class="p">(</span><span class="n">encryptedData</span><span class="p">,</span> <span class="n">key</span><span class="p">);</span>
+</pre></div>
+
+<p>Contact: <a href="mailto:variel@variel.kr">e-mail</a> | <a href="http://variel.kr">Homepage</a></p>
+      </section>
+    </div>
+
+    
+  </body>
+</html>
