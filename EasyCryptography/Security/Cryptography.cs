@@ -69,7 +69,7 @@ namespace Variel.Security
         public static CryptoStream GetEncryptStreamAES(string key, byte[] salt, Stream output)
         {
             var r = RijndaelManaged.Create();
-            PasswordDeriveBytes pw = new PasswordDeriveBytes(key, salt);
+            Rfc2898DeriveBytes pw = new Rfc2898DeriveBytes(key, salt);
 
             CryptoStream cs = new CryptoStream(output, r.CreateEncryptor(pw.GetBytes(32), pw.GetBytes(16)), CryptoStreamMode.Write);
 
@@ -79,7 +79,7 @@ namespace Variel.Security
         public static CryptoStream GetEncryptStreamAES(byte[] key, byte[] salt, Stream output)
         {
             var r = RijndaelManaged.Create();
-            PasswordDeriveBytes pw = new PasswordDeriveBytes(key, salt);
+            Rfc2898DeriveBytes pw = new Rfc2898DeriveBytes(key, salt, 5);
 
             CryptoStream cs = new CryptoStream(output, r.CreateEncryptor(pw.GetBytes(32), pw.GetBytes(16)), CryptoStreamMode.Write);
 
@@ -148,7 +148,7 @@ namespace Variel.Security
         public static CryptoStream GetDecryptStreamAES(string key, byte[] salt, Stream input)
         {
             var r = RijndaelManaged.Create();
-            PasswordDeriveBytes pw = new PasswordDeriveBytes(key, salt);
+            Rfc2898DeriveBytes pw = new Rfc2898DeriveBytes(key, salt);
 
             CryptoStream cs = new CryptoStream(input, r.CreateDecryptor(pw.GetBytes(32), pw.GetBytes(16)), CryptoStreamMode.Read);
 
@@ -157,7 +157,7 @@ namespace Variel.Security
         public static CryptoStream GetDecryptStreamAES(byte[] key, byte[] salt, Stream input)
         {
             var r = RijndaelManaged.Create();
-            PasswordDeriveBytes pw = new PasswordDeriveBytes(key, salt);
+            Rfc2898DeriveBytes pw = new Rfc2898DeriveBytes(key, salt, 5);
 
             CryptoStream cs = new CryptoStream(input, r.CreateDecryptor(pw.GetBytes(32), pw.GetBytes(16)), CryptoStreamMode.Read);
 
