@@ -2,6 +2,7 @@
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using HashAlgo = System.Security.Cryptography.HashAlgorithm;
 
 namespace Variel.Security
 {
@@ -36,11 +37,12 @@ namespace Variel.Security
         /// 알고리즘을 선택하여 값을 입력하면, 해시 알고리즘에 의해 나온 결과 값을 얻을 수 있습니다.
         /// </summary>
         /// <param name="hashAlgorithm">적용하고자 하는 알고리즘</param>
-        /// <param name="buffer">변환하고자 하는 바이트 배열</param>
+        /// <param name="input">변환하고자 하는 바이트 배열</param>
+        /// <param name="shortFormat">짧은 포맷의 결과를 반환할지 여부를 결정합니다</param>
         /// <returns>해시 알고리즘에 의해 나온 결과 값을 반환합니다.</returns>
-        public static string Generate(HashAlgorithm hashAlgorithm, byte[] buffer)
+        public static string Generate(HashAlgorithm hashAlgorithm, byte[] input, bool shortFormat = false)
         {
-            return Generate(hashAlgorithm, new MemoryStream(buffer));
+            return Generate(hashAlgorithm, new MemoryStream(input), shortFormat);
         }
 
         /// <summary>
@@ -48,66 +50,38 @@ namespace Variel.Security
         /// </summary>
         /// <param name="hashAlgorithm">적용하고자 하는 알고리즘</param>
         /// <param name="inputStream">변환하고자 하는 Stream</param>
+        /// <param name="shortFormat">짧은 포맷의 결과를 반환할지 여부를 결정합니다</param>
         /// <returns>해시 알고리즘에 의해 나온 결과 값을 반환합니다.</returns>
-        public static string Generate(HashAlgorithm hashAlgorithm, Stream inputStream)
+        public static string Generate(HashAlgorithm hashAlgorithm, Stream inputStream, bool shortFormat = false)
+        {
+            var provider = GetProvider(hashAlgorithm);
+            var hashed = provider.ComputeHash(inputStream);
+
+            if (!shortFormat)
+                return BitConverter.ToString(hashed).Replace("-", "");
+
+            return hashed.ToShortString();
+        }
+
+        private static HashAlgo GetProvider(HashAlgorithm hashAlgorithm)
         {
             switch (hashAlgorithm)
             {
                 case HashAlgorithm.MD5:
-                    return md5Hash(inputStream);
+                    return MD5.Create();
 
                 case HashAlgorithm.SHA1:
-                    return sha1Hash(inputStream);
+                    return SHA1.Create();
 
                 case HashAlgorithm.SHA256:
-                    return sha256Hash(inputStream);
+                    return SHA256.Create();
 
                 case HashAlgorithm.SHA512:
-                    return sha256Hash(inputStream);
+                    return SHA512.Create();
 
                 default:
-                    throw new ArgumentNullException("HashProvider is null");
+                    throw new ArgumentException("Undefined Hash Algorithm");
             }
         }
-
-        #region MD5Hash
-        private static string md5Hash(Stream input)
-        {
-            var sha = MD5CryptoServiceProvider.Create();
-            var hashed = sha.ComputeHash(input);
-
-            return BitConverter.ToString(hashed);
-        }
-        #endregion
-
-        #region SHA1Hash
-        private static string sha1Hash(Stream input)
-        {
-            var sha = SHA1CryptoServiceProvider.Create();
-            var hashed = sha.ComputeHash(input);
-
-            return BitConverter.ToString(hashed);
-        }
-        #endregion
-
-        #region SHA256Hash
-        private static string sha256Hash(Stream input)
-        {
-            var sha = SHA256CryptoServiceProvider.Create();
-            var hashed = sha.ComputeHash(input);
-
-            return BitConverter.ToString(hashed);
-        }
-        #endregion
-
-        #region SHA512Hash
-        private static string sha512Hash(Stream input)
-        {
-            var sha = SHA256CryptoServiceProvider.Create();
-            var hashed = sha.ComputeHash(input);
-
-            return BitConverter.ToString(hashed);
-        }
-        #endregion
     }
 }
