@@ -28,9 +28,9 @@ namespace Variel.Security
         /// <param name="hashAlgorithm">적용하고자 하는 알고리즘</param>
         /// <param name="inputString">변환하고자 하는 문자열</param>
         /// <returns>해시 알고리즘에 의해 나온 결과 값을 반환합니다.</returns>
-        public static string Generate(HashAlgorithm hashAlgorithm, string inputString)
+        public static string Generate(HashAlgorithm hashAlgorithm, string inputString, bool shortFormat = false)
         {
-            return Generate(hashAlgorithm, Encoding.UTF8.GetBytes(inputString));
+            return Generate(hashAlgorithm, Encoding.UTF8.GetBytes(inputString), shortFormat);
         }
 
         /// <summary>
