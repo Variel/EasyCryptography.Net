@@ -13,7 +13,7 @@ It designed for easiness, not for diversity or powerful functions
 using Variel.Security;
 
 //How to hash data (SHA1/256/512, MD5 Supported)
-string sha256Hash = Hash.SHA256Hash("This string will be hashed");
+string sha256Hash = Hash.Generate(HashAlgorithm.SHA256, "This string will be hashed");
 
 //How to encrypt and decrypt data symmetrically (AES(Rijndael) Supported)
 byte[] salt = Guid.NewGuid().ToByteArray(); //Create a salt;
